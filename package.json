@@ -10,9 +10,7 @@
   },
   "bundleDependencies": true,
   "dependencies": {
-    "@apetrisor/nox-server": "git+https://github.com/apetrisor/nox-server.git"
-  },
-  "devDependencies": {
+    "@apetrisor/nox-server": "git+https://github.com/apetrisor/nox-server.git",
     "@babel/core": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
@@ -30,5 +28,8 @@
     "sapper": "^0.28.0",
     "svelte": "^3.17.3",
     "svelte-preprocess": "^4.6.6"
+  },
+  "devDependencies": {
+    
   }
 }
