@@ -8,9 +8,7 @@
     "export": "sapper export --legacy",
     "start": "node __sapper__/build"
   },
-  "bin": {
-    "nox-kit": "nox-kit"
-  },
+  "bundleDependencies": true,
   "dependencies": {
     "@apetrisor/nox-server": "git+https://github.com/apetrisor/nox-server.git"
   },
