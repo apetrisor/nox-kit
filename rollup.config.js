@@ -8,7 +8,7 @@ import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 import alias from '@rollup/plugin-alias';
 import path from 'path';
-import sveltePreprocess from 'svelte-preprocess';
+const {preprocess} = require('./svelte.config');
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -20,34 +20,35 @@ const onwarn = (warning, onwarn) =>
 	(warning.code === 'PLUGIN_WARNING' && warning.pluginCode === 'a11y-no-onchange') ||
 	onwarn(warning);
 
-const preprocess = sveltePreprocess({
-	scss: {
-		includePaths: ['src'],
-	},
-	postcss: true,
-	preserve: ['ld+json'],
-});
-
 export default {
 	client: {
 		input: config.client.input(),
 		output: config.client.output(),
-		watch: {chokidar: true, exclude: 'node_modules/**'},
 		plugins: [
 			alias({
 				resolve: ['.js', '.svelte'], // optional, by default this will just look for .js files or folders
-				entries: [{find: '@', replacement: path.resolve(__dirname, 'src')}],
+				entries: [
+					{find: 'components', replacement: path.resolve(__dirname, 'src/components')},
+					{find: 'lib', replacement: path.resolve(__dirname, 'src/lib')},
+					{find: 'models', replacement: path.resolve(__dirname, 'src/models')},
+				],
 			}),
 			replace({
-				'process.browser': true,
-				'process.env.NODE_ENV': JSON.stringify(mode),
+				values: {
+					'process.browser': true,
+					'process.env.NODE_ENV': JSON.stringify(mode),
+					'process.assetsUrl': JSON.stringify(process.env.ASSETS_URL),
+					'process.safeMode': process.env.SAFE_MODE === 'true' ? true : false,
+				},
+				preventAssignment: false,
 			}),
 			svelte({
-				preprocess,
 				compilerOptions: {
 					dev,
 					hydratable: true,
 				},
+				emitCss: true,
+				preprocess,
 			}),
 			resolve({
 				browser: true,
@@ -92,24 +93,32 @@ export default {
 	server: {
 		input: config.server.input(),
 		output: config.server.output(),
-		watch: {chokidar: true, exclude: 'node_modules/**'},
 		plugins: [
 			alias({
 				resolve: ['.js', '.svelte'], // optional, by default this will just look for .js files or folders
-				entries: [{find: '@', replacement: path.resolve(__dirname, 'src')}],
+				entries: [
+					{find: 'components', replacement: path.resolve(__dirname, 'src/components')},
+					{find: 'lib', replacement: path.resolve(__dirname, 'src/lib')},
+					{find: 'models', replacement: path.resolve(__dirname, 'src/models')},
+				],
 			}),
 			replace({
-				'process.browser': false,
-				'process.env.NODE_ENV': JSON.stringify(mode),
+				values: {
+					'process.browser': false,
+					'process.env.NODE_ENV': JSON.stringify(mode),
+					'process.assetsUrl': JSON.stringify(process.env.ASSETS_URL),
+					'process.safeMode': process.env.SAFE_MODE === 'true' ? true : false,
+				},
+				preventAssignment: false,
 			}),
 			svelte({
-				preprocess,
 				compilerOptions: {
 					dev,
 					generate: 'ssr',
 					hydratable: true,
 				},
 				emitCss: false,
+				preprocess,
 			}),
 			resolve({
 				dedupe: ['svelte'],
