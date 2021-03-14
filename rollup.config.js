@@ -9,6 +9,7 @@ import pkg from './package.json';
 import alias from '@rollup/plugin-alias';
 import path from 'path';
 import sveltePreprocess from 'svelte-preprocess';
+import json from '@rollup/plugin-json';
 
 const preprocess = sveltePreprocess({
 	scss: {
@@ -33,6 +34,7 @@ export default {
 		input: config.client.input(),
 		output: config.client.output(),
 		plugins: [
+			json(),
 			alias({
 				resolve: ['.js', '.svelte'], // optional, by default this will just look for .js files or folders
 				entries: [
@@ -102,6 +104,7 @@ export default {
 		input: config.server.input(),
 		output: config.server.output(),
 		plugins: [
+			json(),
 			alias({
 				resolve: ['.js', '.svelte'], // optional, by default this will just look for .js files or folders
 				entries: [
