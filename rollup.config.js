@@ -8,7 +8,15 @@ import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 import alias from '@rollup/plugin-alias';
 import path from 'path';
-const {preprocess} = require('./svelte.config');
+import sveltePreprocess from 'svelte-preprocess';
+
+const preprocess = sveltePreprocess({
+	scss: {
+		includePaths: ['src'],
+	},
+	postcss: true,
+	preserve: ['ld+json'],
+});
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
