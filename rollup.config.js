@@ -5,17 +5,19 @@ import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import {terser} from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
-import pkg from './package.json';
 import alias from '@rollup/plugin-alias';
 import path from 'path';
 import sveltePreprocess from 'svelte-preprocess';
 import json from '@rollup/plugin-json';
+import noxServerPkg from '@apetrisor/nox-server/package.json';
 
 const preprocess = sveltePreprocess({
 	scss: {
 		includePaths: ['src'],
 	},
-	postcss: true,
+	postcss: {
+		configFilePath: './node_modules/@apetrisor/nox-kit',
+	},
 	preserve: ['ld+json'],
 });
 
@@ -136,7 +138,7 @@ export default {
 			}),
 			commonjs(),
 		],
-		external: Object.keys(pkg.dependencies).concat(require('module').builtinModules),
+		external: Object.keys(noxServerPkg.dependencies).concat(require('module').builtinModules),
 
 		preserveEntrySignatures: 'strict',
 		onwarn,
