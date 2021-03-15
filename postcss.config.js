@@ -12,7 +12,7 @@ const dev = mode === 'development';
 
 module.exports = {
 	plugins: [
-		tailwind,
+		tailwind({config: './node_modules/@apetrisor/nox-kit/tailwind.config.js'}),
 		presetEnv,
 		// TODO - cssnano is not currently compatible with PostCSS8, wait till they update it
 		// !dev && cssnano,
