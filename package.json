@@ -7,7 +7,7 @@
   "bin": {
     "nox": "cli.js"
   },
-  "bundleDependencies": false,
+  "bundleDependencies": true,
   "dependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
