@@ -4,7 +4,10 @@
   "description": "NOX (Node on Xanax) Kit",
   "author": "Alex Petrisor",
   "license": "MIT",
-  "bundleDependencies": true,
+  "bin": {
+    "nox": "cli.js"
+  },
+  "bundleDependencies": false,
   "dependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
