@@ -1,10 +1,11 @@
 const tailwind = require('tailwindcss');
-const cssnano = require('cssnano');
+// const cssnano = require('cssnano');
 const presetEnv = require('postcss-preset-env')({
 	features: {
 		// enable nesting
 		'nesting-rules': true,
 	},
+	autoprefixer: {grid: true},
 });
 
 const mode = process.env.NODE_ENV;
