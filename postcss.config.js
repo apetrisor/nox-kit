@@ -1,11 +1,10 @@
 const tailwind = require('tailwindcss');
-// const cssnano = require('cssnano');
+const csso = require('postcss-csso');
 const presetEnv = require('postcss-preset-env')({
 	features: {
 		// enable nesting
 		'nesting-rules': true,
 	},
-	autoprefixer: {grid: true},
 });
 
 const mode = process.env.NODE_ENV;
@@ -15,7 +14,7 @@ module.exports = {
 	plugins: [
 		tailwind({config: './node_modules/@apetrisor/nox-kit/tailwind.config.js'}),
 		presetEnv,
-		// TODO - cssnano is not currently compatible with PostCSS8, wait till they update it
-		// !dev && cssnano,
+		//
+		!dev && csso(),
 	],
 };
