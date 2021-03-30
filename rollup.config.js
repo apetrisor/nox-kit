@@ -95,6 +95,7 @@ export default {
 			!dev &&
 				terser({
 					module: true,
+					output: {comments: false},
 				}),
 		],
 
