@@ -9,6 +9,7 @@ import alias from '@rollup/plugin-alias';
 import path from 'path';
 import sveltePreprocess from 'svelte-preprocess';
 import json from '@rollup/plugin-json';
+import svelteSVG from 'rollup-plugin-svelte-svg';
 import noxServerPkg from '@apetrisor/nox-server/package.json';
 
 const preprocess = sveltePreprocess({
@@ -54,6 +55,7 @@ export default {
 				},
 				preventAssignment: false,
 			}),
+			svelteSVG({dev}),
 			svelte({
 				compilerOptions: {
 					dev,
@@ -125,6 +127,7 @@ export default {
 				},
 				preventAssignment: false,
 			}),
+			svelteSVG({generate: 'ssr', dev}),
 			svelte({
 				compilerOptions: {
 					dev,
